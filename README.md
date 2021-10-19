@@ -1,39 +1,86 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+# Dart Webview
+Dart bindings for [webview](https://github.com/webview/webview), 
+A tiny cross-platform webview library to build modern cross-platform GUIs
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## Installation
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
+create a new project
+```bash
+    dart create myapp
 ```
 
-## Additional information
+in pubspec.yaml add
+```yaml
+    dependencies: 
+        webview_dart: ^1.0.0
+            git: https://github.com/shreyassanthu77/webview_dart
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```
+
+### windows
+
+Download the prebuilt binaries for windows from releases and place them in your root directory under out folder
+> Note you need to ship them with the final executable file
+
+your folder structure should now look like this
+```
+    myapp
+      |
+      +---- out
+      |      |
+      |      +--- webview.dll
+      |      |
+      |      +--- webview2loader.dll
+      |
+      +--- bin
+      |     |
+      |     +--- myapp.dart
+      |
+      +---- all other files
+
+```
+
+### Linux
+
+Download the prebuilt binaries for linux from releases and place them in your root directory under out folder
+> Note you need to ship them with the final executable file
+
+your folder structure should now look like this
+```
+    myapp
+      |
+      +---- out
+      |      |
+      |      +--- webview.so
+      |
+      +--- bin
+      |     |
+      |     +--- myapp.dart
+      |
+      +---- all other files
+
+```
+    
+
+### Macos
+Unfortunately I don't have a mac so please check the build instructions to build the .dylib files
+After you build the library prepare the same folder structure as linux and you are good to go
+## Documentation
+
+in your `myapp.dart` file
+```dart
+    import 'package:webview_dart/webview_dart.dart';
+
+    void main() {
+    final url = "https://www.google.com";
+    Webview(true)
+        .setTitle("title")
+        .setSize(1280, 800, SIzeHint.none)
+        .navigate(url)
+        .run();
+    }
+```
+
+  
