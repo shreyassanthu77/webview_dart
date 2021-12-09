@@ -11,7 +11,11 @@ create a new project
     dart create myapp
 ```
 
-in pubspec.yaml add
+Run this command from the project directory
+```bash
+    dart pub add webview_dart --git-url https://github.com/shreyassanthu77/webview_dart
+```
+or add this to pubspec.yaml
 ```yaml
     dependencies: 
         webview_dart: ^1.0.0
@@ -77,7 +81,7 @@ in your `myapp.dart` file
     final url = "https://www.google.com";
     Webview(true)
         .setTitle("title")
-        .setSize(1280, 800, SIzeHint.none)
+        .setSize(1280, 800, SizeHint.none)
         .navigate(url)
         .run();
     }
@@ -92,7 +96,7 @@ in your `myapp.dart` file
 
 ```bash
   cd out
-  dart run ../myapp.dart
+  dart run ../bin/myapp.dart
 ```
 
   
