@@ -79,6 +79,24 @@ class Webview {
     if (autoDestroy) destroy();
   }
 
+  static void cb(Pointer<Utf8> seq, Pointer<Utf8> req, Pointer<Void> arg) {
+    final request = req.toDartString();
+    List<dynamic> data = jsonDecode(request);
+    final binding = data[0] as String;
+    final List<dynamic> args = data.sublist(1);
+    if (_bindings.containsKey(binding)) {
+      _bindings[binding]!.call(args);
+    }
+  }
+
+  Webview bind(String name, void Function(List<dynamic>) callback) {
+    final cName = name.toNativeUtf8();
+    _bindings[name] = callback;
+    _bind(_handle, cName, Pointer.fromFunction(cb), nullptr);
+    malloc.free(cName);
+    return this;
+  }
+
   void destroy() {
     _destroy(_handle);
   }
