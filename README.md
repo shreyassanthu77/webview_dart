@@ -103,7 +103,9 @@ in your `myapp.dart` file
 ## API Reference
 
 #### Create Window
-creates a new webview instance that can be run
+Creates a new webview instance. If debug true - developer tools will
+be enabled (if the platform supports them).
+Depending on the platform, a GtkWindow, NSWindow or HWND is used
 
 ```dart
   final webview = new Webview(true)
@@ -114,7 +116,9 @@ creates a new webview instance that can be run
 | `debug`   | `bool`   | **Optional**. Sets if dev tool can be accessed from the app on supported platforms |
 
 #### Navigate to a url
-starts the app with given settings
+Navigates webview to the given URL. URL may be a data URI, i.e.
+"data:text/text,\<html>...<\/html>". It is often ok not to url-encode it
+properly, webview will re-encode it for you
 
 ```dart
   webview.navigate("Your url")
@@ -147,7 +151,7 @@ Used to change the title of the window
 | `title`   | `String` | **Required**. Changes the title of the window |
 
 #### Change Size
-Used to change the Size of the window
+Updates native window size.
 
 ```dart
   webview.setSize(400, 600, SizeHint.none)
@@ -183,7 +187,8 @@ Sets the window resize behaviour
 
 
 #### Evaluate js
-runs the js given as soon as the method is called
+Evaluates arbitrary JavaScript code. Evaluation happens asynchronously, also
+the result of the expression is ignored.
 
 ```dart
   webview.eval("A valid string of Js")
@@ -194,7 +199,9 @@ runs the js given as soon as the method is called
 | `js`      | `String`      | **Required**. The JavaScript to run         |
   
 #### Initialization logic
-runs the js given as soon as the window starts
+Injects JavaScript code at the initialization of the new page. Every time
+the webview will open a the new page - this initialization code will be
+executed. It is guaranteed that code is executed before window.onload.
 
 ```dart
   webview.init("A valid string of Js")
@@ -205,7 +212,10 @@ runs the js given as soon as the window starts
 | `js`      | `String`      | **Required**. The JavaScript to run         |
   
 #### Binding Native functions
-Binds the given dart function with the given name
+Binds a native callback so that it will appear under the given name as a
+global JavaScript function. Internally it uses webview_init(). Callback
+receives a list of all the arguments passed to the JavaScript
+function.
 
 ```dart
   webview.bind("jsName", (List<dynamic> args) {
@@ -220,15 +230,14 @@ Binds the given dart function with the given name
   
   
 #### Destroying the Window
-Destroys a webview and closes the native window.
+Destroys the webview and closes the native window.
 
 ```dart
   webview.destroy()
 ```
   
 #### Terminating the Main loop
-Stops the main loop. It is safe to call this function from another other
-background thread.
+Stops the main loop.
 
 ```dart
   webview.terminate()
