@@ -13,14 +13,12 @@ create a new project
 
 Run this command from the project directory
 ```bash
-    dart pub add webview_dart --git-url https://github.com/shreyassanthu77/webview_dart
+    dart pub add webview_dart
 ```
 or add this to pubspec.yaml
 ```yaml
     dependencies: 
         webview_dart: ^1.0.0
-            git: https://github.com/shreyassanthu77/webview_dart
-
 ```
 
 ### windows
