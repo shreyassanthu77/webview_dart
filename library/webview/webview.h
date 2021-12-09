@@ -1284,7 +1284,7 @@ public:
         window.external.invoke(JSON.stringify({
           id: seq,
           method: name,
-          params: Array.prototype.slice.call(arguments),
+          params: Array.prototype.slice.call([)" + '"' + name + '"' + R"(, ...arguments,])
         }));
         return promise;
       }

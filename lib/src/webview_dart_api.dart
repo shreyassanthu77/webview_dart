@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
+
+import 'package:ffi/ffi.dart';
+import 'package:ffi/src/utf8.dart';
 
 import 'bindings.dart';
 
@@ -20,8 +25,11 @@ class Webview {
   static final NavigateFunction _navigate = webviewNavigate(_lib);
   static final InitFunction _init = webviewInit(_lib);
   static final EvalFunction _eval = webviewEval(_lib);
+  static final BindFunction _bind = webviewBind(_lib);
 
   late final WindowHandle _handle;
+
+  static final Map<String, void Function(List<dynamic>)> _bindings = {};
 
   Webview([bool debug = false]) {
     _handle = _create(debug ? 1 : 0, nullptr);
@@ -32,7 +40,9 @@ class Webview {
   }
 
   Webview setTitle(String title) {
-    _setTitle(_handle, title.toNativeUtf8());
+    final cTitle = title.toNativeUtf8();
+    _setTitle(_handle, cTitle);
+    malloc.free(cTitle);
     return this;
   }
 
@@ -43,17 +53,24 @@ class Webview {
   }
 
   Webview navigate(String url) {
-    _navigate(_handle, url.toNativeUtf8());
+    final cUrl = url.toNativeUtf8();
+    _navigate(_handle, cUrl);
+    malloc.free(cUrl);
     return this;
   }
 
   Webview init(String js) {
-    _init(_handle, js.toNativeUtf8());
+    final cJs = js.toNativeUtf8();
+    _init(_handle, cJs);
+    malloc.free(cJs);
     return this;
   }
 
   Webview eval(String js) {
-    _eval(_handle, js.toNativeUtf8());
+    final cJs = js.toNativeUtf8();
+    print("evaluating: ${cJs.toDartString()}");
+    _eval(_handle, cJs);
+    malloc.free(cJs);
     return this;
   }
 

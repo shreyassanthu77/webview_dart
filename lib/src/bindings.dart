@@ -1,8 +1,8 @@
-import 'dart:ffi';
+import 'dart:ffi' hide IntPtrPointer;
 import 'package:ffi/ffi.dart';
 
-export 'dart:ffi' show nullptr;
-export 'package:ffi/ffi.dart' show StringUtf8Pointer;
+export 'dart:ffi' show nullptr, Pointer, Void;
+export 'package:ffi/ffi.dart' show StringUtf8Pointer, malloc, Utf8;
 
 typedef WebviewLib = DynamicLibrary;
 typedef WindowHandle = Pointer<Void>;
@@ -19,6 +19,12 @@ typedef NativeNavigateFunction = Void Function(WindowHandle, Pointer<Utf8>);
 typedef NativeInitFunction = Void Function(WindowHandle, Pointer<Utf8>);
 typedef NativeEvalFunction = Void Function(WindowHandle, Pointer<Utf8>);
 
+typedef BindFunctionPtr = Pointer<
+    NativeFunction<Void Function(Pointer<Utf8>, Pointer<Utf8>, Pointer<Void>)>>;
+
+typedef NativeBindFunction = Void Function(
+    WindowHandle, Pointer<Utf8>, BindFunctionPtr, Pointer<Void>);
+
 // darty functions
 typedef CreateFunction = WindowHandle Function(int, WindowHandle);
 typedef DestroyFunction = void Function(WindowHandle);
@@ -29,6 +35,8 @@ typedef SetSizeFunction = void Function(WindowHandle, int, int, int);
 typedef NavigateFunction = void Function(WindowHandle, Pointer<Utf8>);
 typedef InitFunction = void Function(WindowHandle, Pointer<Utf8>);
 typedef EvalFunction = void Function(WindowHandle, Pointer<Utf8>);
+typedef BindFunction = void Function(
+    WindowHandle, Pointer<Utf8>, BindFunctionPtr, Pointer<Void>);
 
 DynamicLibrary? _library;
 
@@ -84,4 +92,9 @@ InitFunction webviewInit(DynamicLibrary webview) {
 EvalFunction webviewEval(DynamicLibrary webview) {
   return webview
       .lookupFunction<NativeEvalFunction, EvalFunction>("webview_eval");
+}
+
+BindFunction webviewBind(DynamicLibrary webview) {
+  return webview
+      .lookupFunction<NativeBindFunction, BindFunction>("webview_bind");
 }
