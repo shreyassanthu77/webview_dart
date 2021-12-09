@@ -5,7 +5,7 @@ void main() async {
   Webview(true)
       .setTitle("Google")
       .setSize(1280, 800,
-          SIzeHint.none /* Sizehint is optional and can be omitted */)
+          SizeHint.none /* Sizehint is optional and can be omitted */)
       .navigate(url)
       .run();
 }
