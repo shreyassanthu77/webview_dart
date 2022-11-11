@@ -1,13 +1,13 @@
 name: webview_dart
 description: Dart bindings for webview, A tiny cross-platform webview library to build modern cross-platform GUIs
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/shreyassanthu77/webview_dart
 
 environment:
-  sdk: '>=2.14.4 <3.0.0'
+  sdk: ">=2.14.4 <3.0.0"
 
 dev_dependencies:
   lints: ^1.0.0
   test: ^1.16.0
-dependencies: 
-  ffi: ^1.1.2
+dependencies:
+  ffi: ^2.0.1

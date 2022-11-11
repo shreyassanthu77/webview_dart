@@ -1,8 +1,8 @@
-import 'dart:ffi' hide IntPtrPointer;
+import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 
 export 'dart:ffi' show nullptr, Pointer, Void;
-export 'package:ffi/ffi.dart' show StringUtf8Pointer, malloc, Utf8;
+export 'package:ffi/ffi.dart' show StringUtf8Pointer, Utf8;
 
 typedef WebviewLib = DynamicLibrary;
 typedef WindowHandle = Pointer<Void>;
